@@ -3,6 +3,8 @@ import * as Route from '../controller/route.js'
 import * as Auth from '../controller/auth.js'
 import * as Home from './home_page.js'
 import * as Util from './util.js'
+import * as FirebaseController from '../controller/firebase_controller.js'
+import * as Constant from '../model/constant.js'
 
 //event listeners for home page
 export function addEventListeners(){
@@ -89,16 +91,24 @@ export async function cart_page(){
     checkoutButton.addEventListener('click', async () =>{
 
         const label = Util.disableButton(checkoutButton);
-       // save cart info as purchase history to firestore
-      // await Util.sleep(1000);
+        // save cart info as purchase history to firestore
+        try{
+            await FirebaseController.checkOut(cart);
 
-       Util.info('Success', 'Checkout Complete')
-       //remove localstorage of cart
-       window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
-       cart.empty();
-       Element.shoppingCartCount.innerHTML = '0';
-       history.pushState(null, null, Route.routePathnames.HOME);
-       await Home.home_page();
+            // await Util.sleep(1000);
+            Util.info('Success', 'Checkout Complete')
+            //remove localstorage of cart after checkout is complete
+            window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
+            cart.empty();
+            Element.shoppingCartCount.innerHTML = '0';
+            history.pushState(null, null, Route.routePathnames.HOME);
+            await Home.home_page();
+        }catch(e){
+            if(Constant.DEV) console.log(e);
+            Util.info('Checkout Error', JSON.stringify(e));
+
+        }
+       
 
        Util.enableButton(checkoutButton, label);
     });

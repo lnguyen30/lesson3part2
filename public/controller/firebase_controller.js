@@ -27,3 +27,10 @@ export async function getProductList(){
     })
     return products;
 }
+
+// adds cart to firestore database, into purchase history collection
+export async function checkOut(cart){
+    const data = cart.serialize(Date.now());
+    await firebase.firestore().collection(Constant.collectionNames.PURCHASE_HISTORY)
+                    .add(data);
+}

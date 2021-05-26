@@ -47,6 +47,11 @@ export class ShoppingCart {
 
     }
 
+    //arranges cart info to store into firebase
+    serialize(timestamp){
+        return {uid: this.uid, items: this.items, timestamp};
+    }
+
     //using windows locatstorage to save items
     saveToLocalStorage(){
         window.localStorage.setItem( `cart-${this.uid}`, this.stringify())
