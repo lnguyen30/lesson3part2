@@ -97,7 +97,7 @@ export async function cart_page(){
 
             // await Util.sleep(1000);
             Util.info('Success', 'Checkout Complete')
-            //remove localstorage of cart after checkout is complete
+            //remove localstorage of cart after checkout is complete, reset cart count, and navigate back to home page
             window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
             cart.empty();
             Element.shoppingCartCount.innerHTML = '0';
@@ -106,10 +106,8 @@ export async function cart_page(){
         }catch(e){
             if(Constant.DEV) console.log(e);
             Util.info('Checkout Error', JSON.stringify(e));
-
         }
        
-
        Util.enableButton(checkoutButton, label);
     });
     

@@ -52,6 +52,14 @@ export class ShoppingCart {
         return {uid: this.uid, items: this.items, timestamp};
     }
 
+    //takes the json object and rearranges it to create a shopping cart and to display on webpage
+    static deserialize(data){
+        const sc = new ShoppingCart(data.uid);
+        sc.items = data.items;
+        sc.timestamp = data.timestamp;
+        return sc;
+    }
+
     //using windows locatstorage to save items
     saveToLocalStorage(){
         window.localStorage.setItem( `cart-${this.uid}`, this.stringify())
