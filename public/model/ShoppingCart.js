@@ -70,12 +70,18 @@ export class ShoppingCart {
 
     //parses through stringify cart
     static parse(cartString){
-        if(!cartString) return null;
-        const obj = JSON.parse(cartString);
-        // json file to shopping cart obj
-        const sc = new ShoppingCart(obj.uid)
-        sc.items = obj.items
-        return sc;
+        try{
+            if(!cartString) return null;
+            const obj = JSON.parse(cartString);
+            // json file to shopping cart obj
+            const sc = new ShoppingCart(obj.uid)
+            sc.items = obj.items
+            return sc;
+        }catch(e){
+            //if parse fails, return null
+            return null;
+        }
+       
     }
 
     // get amt from shopping cart
