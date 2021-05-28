@@ -91,6 +91,24 @@ aria-labelledby="modal-info-title" aria-hidden="true">
     </div>
   </div>
 
+
+  <!-- Modal: transaction detail view -->
+<div class="modal fade" id="modal-transaction-view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" 
+    aria-labelledby="modal-transaction-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-transaction-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-transaction-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div id="root" class="bg-light p-5 m-3"></div>
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.6.2/firebase-app.js"></script>

@@ -16,6 +16,9 @@ export const modalSignin = new bootstrap.Modal(document.getElementById('modal-si
 export const modalInfo = new bootstrap.Modal(document.getElementById('modal-info'), {backdrop: 'static'});
 export const modalInfoTitle = document.getElementById('modal-info-title');
 export const modalInfoBody = document.getElementById('modal-info-body');
+export const modalTransactionView = new bootstrap.Modal(document.getElementById('modal-transaction-view'), {backdrop: 'static'});
+export const modalTransactionTitle = document.getElementById('modal-transaction-title');
+export const modalTransactionBody = document.getElementById('modal-transaction-body');
 
 //root element
 export const root = document.getElementById('root');
