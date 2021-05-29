@@ -46,7 +46,8 @@ export function addEventListeners(){
     if (user){//if user signs in, display the post auth buttons
         currentUser = user;
         //fetches users info
-        Profile.getAccountInfo(user);
+        // needs  to be await so account info is updated properly
+        await Profile.getAccountInfo(user);
 
         //when user signs in, shopping cart will be initialized
         Home.initShoppingCart();

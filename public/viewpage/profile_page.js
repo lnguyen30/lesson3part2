@@ -3,6 +3,7 @@ import * as Route from '../controller/route.js'
 import * as FirebaseController from '../controller/firebase_controller.js'
 import * as Constant from '../model/constant.js'
 import * as Util from './util.js'
+import * as Auth from '../controller/auth.js'
 
 
 //event listeners for profile page
@@ -14,8 +15,29 @@ export function addEventListeners(){
     })
 }
 
+// profile page default state
 export async function profile_page(){
-    Element.root.innerHTML ='<h1>Profile Page</h1>'
+    let html ='<h1>Profile Page</h1>'
+
+    //if user hasn't signed in
+    if(!Auth.currentUser){
+        html +='<h2>Protected Page</h2>'
+        Element.root.innerHTML = html;
+        return;
+    }
+    // if account doesn't exist
+    if(!accountInfo){
+        html += `<h2>Failed to retrieve account info for ${Auth.currentUser.email} </h2>`
+        Element.root.innerHTML = html;
+        return;
+    }
+
+    html += `
+        <div class="alert alert-primary">
+            Email: ${Auth.currentUser.email} (cannot change email as login name)
+        </div>
+    `;
+    Element.root.innerHTML = html;
 }
 
 //global variable for account info
