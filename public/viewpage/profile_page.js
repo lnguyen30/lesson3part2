@@ -31,13 +31,39 @@ export async function profile_page(){
         Element.root.innerHTML = html;
         return;
     }
-
+    //displays account info's email
     html += `
         <div class="alert alert-primary">
             Email: ${Auth.currentUser.email} (cannot change email as login name)
         </div>
     `;
+
+    html +=`
+        <form class"form-profile" method="post">
+            <table class="table table-sm">
+            <tr>
+                <td width="15%">Name:</td>
+                <td width="60%">
+                    <input type="text" name="name" value="${accountInfo.name}"
+                        placeholder="firstname lastname" disabled required
+                        pattern="^[A-Za-z][A-Za-z|'|-| ]">
+                </td>
+                <td>${actionButtons()}</td>
+            </tr>
+            </table>
+        </form>
+    `;
+
     Element.root.innerHTML = html;
+}
+
+function actionButtons(){
+    return`
+    <button type="submit" class="btn btn-outline-primary">Edit</button>
+    <button type="submit" class="btn btn-outline-danger" style="display: none;">Update</button>
+    <button type="submit" class="btn btn-outline-secondary" style="display: none;">Cancel</button>
+
+    `;
 }
 
 //global variable for account info
