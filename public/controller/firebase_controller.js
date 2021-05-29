@@ -55,3 +55,8 @@ export async function getPurchaseHistory(uid){
 
     return carts;
 }
+
+//creates new users on firebase
+export async function createUser(email, password){
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+}

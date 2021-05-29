@@ -74,6 +74,7 @@ export function addEventListeners(){
     }
   });
 
+  // displays sign up modal after click event
   Element.buttonSignup.addEventListener('click', ()=>{
       // close sign in modal
       Element.modalSignin.hide();
@@ -83,6 +84,31 @@ export function addEventListeners(){
       Element.formSignupPasswordError.innerHTML = '';
       //displays signup modal
       Element.modalSignup.show();
+  })
+ 
+  Element.formSignup.addEventListener('submit', async e =>{
+      e.preventDefault();
+      //assigns values from sign up form
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      const passwordConfirm = e.target.passwordConfirm.value;
+
+      //resets error form
+      Element.formSignupPasswordError.innerHTML = ''
+      //error message when two passwords /=
+      if ( password != passwordConfirm){
+          Element.formSignupPasswordError.innerHTML = 'Two passwords do not match';
+          return;
+      }
+        
+      try{
+        await FirebaseController.createUser(email, password)
+        Util.info('Account Created', `You are now signed in as ${email}`, Element.modalSignup);
+      }catch(e){
+        if(Constant.DEV) console.log(e)
+        Util.info('Fail to create new account', JSON.stringify(e), Element.modalSignup)
+      }
+
   })
 
 } 
