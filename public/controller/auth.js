@@ -9,6 +9,7 @@ export let currentUser;
 
 //event listener for menu buttons/forms buttons
 export function addEventListeners(){
+
     Element.formSignin.addEventListener('submit', async e => {
 
          //listens to sign in form when sign in form button is clicked
@@ -73,5 +74,15 @@ export function addEventListeners(){
     }
   });
 
+  Element.buttonSignup.addEventListener('click', ()=>{
+      // close sign in modal
+      Element.modalSignin.hide();
+      //rests sign up form
+      Element.formSignup.reset();
+      //resets error message
+      Element.formSignupPasswordError.innerHTML = '';
+      //displays signup modal
+      Element.modalSignup.show();
+  })
 
 } 
