@@ -54,6 +54,91 @@ export async function profile_page(){
         </form>
     `;
 
+    html +=`
+    <form class"form-profile" method="post">
+        <table class="table table-sm">
+        <tr>
+            <td width="15%">Address:</td>
+            <td width="60%">
+                <input type="text" name="address" value="${accountInfo.address}"
+                    placeholder="Address" disabled required
+                    minlength="2">
+            </td>
+            <td>${actionButtons()}</td>
+        </tr>
+        </table>
+    </form>
+`;
+
+html +=`
+<form class"form-profile" method="post">
+    <table class="table table-sm">
+    <tr>
+        <td width="15%">City:</td>
+        <td width="60%">
+            <input type="text" name="city" value="${accountInfo.city}"
+                placeholder="City" disabled required
+                minlength="2">
+        </td>
+        <td>${actionButtons()}</td>
+    </tr>
+    </table>
+</form>
+`;
+
+html +=`
+<form class"form-profile" method="post">
+    <table class="table table-sm">
+    <tr>
+        <td width="15%">State:</td>
+        <td width="60%">
+            <input type="text" name="state" value="${accountInfo.state}"
+                placeholder="State (uppercase 2 letter state code)" disabled required
+                pattern ="[A-Z]+"
+                minlength="2">
+        </td>
+        <td>${actionButtons()}</td>
+    </tr>
+    </table>
+</form>
+`;
+
+html +=`
+<form class"form-profile" method="post">
+    <table class="table table-sm">
+    <tr>
+        <td width="15%">Zip:</td>
+        <td width="60%">
+            <input type="text" name="zip" value="${accountInfo.zip}"
+                placeholder="5 digit zip code" disabled required
+                pattern ="[0-9]+"
+                minlength="5" maxlength="5">
+        </td>
+        <td>${actionButtons()}</td>
+    </tr>
+    </table>
+</form>
+`;
+
+
+html +=`
+<form class"form-profile" method="post">
+    <table class="table table-sm">
+    <tr>
+        <td width="15%">Credit Card #:</td>
+        <td width="60%">
+            <input type="text" name="creditNo" value="${accountInfo.creditNo}"
+                placeholder="credit card number 16 digits" disabled required
+                pattern ="[0-9]+"
+                minlength="16" maxlength="16">
+        </td>
+        <td>${actionButtons()}</td>
+    </tr>
+    </table>
+</form>
+`;
+
+
     Element.root.innerHTML = html;
 }
 
