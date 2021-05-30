@@ -39,7 +39,7 @@ export async function profile_page(){
     `;
 
     html +=`
-        <form class"form-profile" method="post">
+        <form class="form-profile" method="post">
             <table class="table table-sm">
             <tr>
                 <td width="15%">Name:</td>
@@ -55,7 +55,7 @@ export async function profile_page(){
     `;
 
     html +=`
-    <form class"form-profile" method="post">
+    <form class="form-profile" method="post">
         <table class="table table-sm">
         <tr>
             <td width="15%">Address:</td>
@@ -71,7 +71,7 @@ export async function profile_page(){
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">City:</td>
@@ -87,7 +87,7 @@ html +=`
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">State:</td>
@@ -104,7 +104,7 @@ html +=`
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">Zip:</td>
@@ -157,54 +157,27 @@ html += `
 
     Element.root.innerHTML = html;
 
-    // //collects all forms from profile page
-    // const forms = document.getElementsByClassName('form-profile');
-    // for( let i = 0; i<forms.length; i++){
-    //     forms[i].addEventListener('submit', e =>{
-    //         e.preventDefault();
-    //         //grabs all buttons as an array
-    //         const buttons = e.target.getElementsByTagName('button')
-    //         //grabs field to update info
-    //         const inputTag = e.target.getElementsByTagName('input')[0];
-    //         //assigns buttonLabel variable with the button that was clicked
-    //         const buttonLabel = e.target.submitter;
-
-    //         if(buttonLabel == 'Edit'){
-    //             //hides button
-    //             buttons[0].style.display = 'none';
-    //             //shows other buttons
-    //             buttons[1].style.display = 'inline-block';
-    //             buttons[2].style.display = 'inline-block';
-    //             //re-enables field to update
-    //             inputTag.disabled = false;
-    //         }else if( buttonLabel == 'Update'){
-    //             buttons[0].style.display = 'inline-block';
-    //             buttons[1].style.display = 'none';
-    //             buttons[2].style.display = 'none';
-    //             inputTag.disabled = true;
-    //         }else{
-    //             buttons[0].style.display = 'inline-block';
-    //             buttons[1].style.display = 'none';
-    //             buttons[2].style.display = 'none';
-    //             inputTag.disabled = true;
-    //         }
-    //     })
-    // }
-
-
+    //collects all forms from profile page
     const forms = document.getElementsByClassName('form-profile');
-    for (let i = 0; i<forms.length; i++){
-        forms[i].addEventListener('submit', e=>{
+    for( let i = 0; i<forms.length; i++){
+        forms[i].addEventListener('submit', e =>{
             e.preventDefault();
-            const buttons = e.target.getElementsByTagName('button');
+            //grabs all buttons as an array
+            const buttons = e.target.getElementsByTagName('button')
+            //grabs field to update info
             const inputTag = e.target.getElementsByTagName('input')[0];
+            //assigns buttonLabel variable with the button that was clicked
             const buttonLabel = e.target.submitter;
+
             if(buttonLabel == 'Edit'){
+                //hides button
                 buttons[0].style.display = 'none';
+                //shows other buttons
                 buttons[1].style.display = 'inline-block';
                 buttons[2].style.display = 'inline-block';
+                //re-enables field to update
                 inputTag.disabled = false;
-            }else if(buttonLabel == 'Update'){
+            }else if( buttonLabel == 'Update'){
                 buttons[0].style.display = 'inline-block';
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
@@ -218,6 +191,8 @@ html += `
         })
     }
 
+
+   
 }
 
 function actionButtons(){
@@ -228,7 +203,7 @@ function actionButtons(){
          type="submit" class="btn btn-outline-primary">Edit</button>
     <button onclick="this.form.submitter='Update'"
         type="submit" class="btn btn-outline-danger" style="display: none;">Update</button>
-    <button onclick="this.form.submitter='Cancel'"
+    <button onclick="this.form.submitter='Cancel'" formnovalidate="true"
          type="submit" class="btn btn-outline-secondary" style="display: none;">Cancel</button>
     `;
 }
