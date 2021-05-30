@@ -31,7 +31,7 @@ export async function profile_page(){
         Element.root.innerHTML = html;
         return;
     }
-    //displays account info's email
+    //displays account info's email and other info
     html += `
         <div class="alert alert-primary">
             Email: ${Auth.currentUser.email} (cannot change email as login name)
@@ -46,7 +46,7 @@ export async function profile_page(){
                 <td width="60%">
                     <input type="text" name="name" value="${accountInfo.name}"
                         placeholder="firstname lastname" disabled required
-                        pattern="^[A-Za-z][A-Za-z|'|-| ]">
+                        pattern="^[A-Za-z][A-Za-z|'|-| ]+">
                 </td>
                 <td>${actionButtons()}</td>
             </tr>
@@ -138,16 +138,98 @@ html +=`
 </form>
 `;
 
+//profile page
+html += `
+    <table>
+        <tr>
+            <td>
+                <input type="file" id="profile-photo-upload-button" value="upload">
+            </td>
+            <td>
+                <img id="profile-img-tag" src="${accountInfo.photoURL}" class="rounded-circle" width="250px">
+            </td>
+            <td>
+                <button id="profile-photo-update-button" class="btn btn-outline-danger">Update Photo</button>
+            </td>
+        </tr>
+    </table>
+`
 
     Element.root.innerHTML = html;
+
+    // //collects all forms from profile page
+    // const forms = document.getElementsByClassName('form-profile');
+    // for( let i = 0; i<forms.length; i++){
+    //     forms[i].addEventListener('submit', e =>{
+    //         e.preventDefault();
+    //         //grabs all buttons as an array
+    //         const buttons = e.target.getElementsByTagName('button')
+    //         //grabs field to update info
+    //         const inputTag = e.target.getElementsByTagName('input')[0];
+    //         //assigns buttonLabel variable with the button that was clicked
+    //         const buttonLabel = e.target.submitter;
+
+    //         if(buttonLabel == 'Edit'){
+    //             //hides button
+    //             buttons[0].style.display = 'none';
+    //             //shows other buttons
+    //             buttons[1].style.display = 'inline-block';
+    //             buttons[2].style.display = 'inline-block';
+    //             //re-enables field to update
+    //             inputTag.disabled = false;
+    //         }else if( buttonLabel == 'Update'){
+    //             buttons[0].style.display = 'inline-block';
+    //             buttons[1].style.display = 'none';
+    //             buttons[2].style.display = 'none';
+    //             inputTag.disabled = true;
+    //         }else{
+    //             buttons[0].style.display = 'inline-block';
+    //             buttons[1].style.display = 'none';
+    //             buttons[2].style.display = 'none';
+    //             inputTag.disabled = true;
+    //         }
+    //     })
+    // }
+
+
+    const forms = document.getElementsByClassName('form-profile');
+    for (let i = 0; i<forms.length; i++){
+        forms[i].addEventListener('submit', e=>{
+            e.preventDefault();
+            const buttons = e.target.getElementsByTagName('button');
+            const inputTag = e.target.getElementsByTagName('input')[0];
+            const buttonLabel = e.target.submitter;
+            if(buttonLabel == 'Edit'){
+                buttons[0].style.display = 'none';
+                buttons[1].style.display = 'inline-block';
+                buttons[2].style.display = 'inline-block';
+                inputTag.disabled = false;
+            }else if(buttonLabel == 'Update'){
+                buttons[0].style.display = 'inline-block';
+                buttons[1].style.display = 'none';
+                buttons[2].style.display = 'none';
+                inputTag.disabled = true;
+            }else{
+                buttons[0].style.display = 'inline-block';
+                buttons[1].style.display = 'none';
+                buttons[2].style.display = 'none';
+                inputTag.disabled = true;
+            }
+        })
+    }
+
 }
 
 function actionButtons(){
+    //submitter will restore label 
+    // index 0: Edit, 1: Update, 2: Cancel
     return`
-    <button type="submit" class="btn btn-outline-primary">Edit</button>
-    <button type="submit" class="btn btn-outline-danger" style="display: none;">Update</button>
-    <button type="submit" class="btn btn-outline-secondary" style="display: none;">Cancel</button>
-
+    <button onclick="this.form.submitter='Edit'"
+         type="submit" class="btn btn-outline-primary">Edit</button>
+    <button onclick="this.form.submitter='Update'"
+        type="submit" class="btn btn-outline-danger" style="display: none;">Update</button>
+    <button onclick="this.form.submitter='Cancel'"
+         type="submit" class="btn btn-outline-secondary" style="display: none;">Cancel</button>
     `;
 }
 
