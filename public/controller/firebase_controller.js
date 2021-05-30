@@ -87,3 +87,15 @@ export async function updateAccountInfo(uid, updateInfo){
 
 }
 
+//uploads profile pic to firebase
+export async function uploadProfilePhoto (photoFile, imageName){
+    //stores photo to firebase into storage
+    const ref = firebase.storage().ref()
+        .child(Constant.storageFolderNames.PROFILE_PHOTOS + imageName)
+    //stores photo
+    const taskSnapShot = await ref.put(photoFile);
+    //retrieves the photo url assigned by firebase
+    const photoURL = await taskSnapShot.ref.getDownloadURL();
+    return photoURL;
+}
+

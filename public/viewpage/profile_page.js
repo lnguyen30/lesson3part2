@@ -156,6 +156,48 @@ html += `
 `
 
     Element.root.innerHTML = html;
+    //global var for photo file
+    let photoFile;
+
+    const updateProfilePhotoButton = document.getElementById('profile-photo-update-button');
+    // event listener to update profile picture
+    updateProfilePhotoButton.addEventListener('click', async () =>{
+        if(!photoFile){
+            Util.info('No Photo Selected', 'Choose a profile photo');
+            return;
+        }
+        const label = Util.disableButton(updateProfilePhotoButton);
+        try{
+            const photoURL = await FirebaseController.uploadProfilePhoto(photoFile, Auth.currentUser.uid);
+            // updates  account info with photoURL
+            await FirebaseController.updateAccountInfo(Auth.currentUser.uid, {photoURL})
+            //updates the account info's photo url with photoURL from firebase
+            accountInfo.photoURL = photoURL;
+             //updates user's profile pic
+             Element.menuProfile.innerHTML = `
+             <img src=${accountInfo.photoURL} class="rounded-circle" height="30px">
+            `;
+
+            Util.info('Success', 'Profile Photo Updated')
+        }catch(e){
+            if(Constant.DEV) console.log(e);
+            Util.info('Photo update error', JSON.stringify(e))
+        }
+
+        Util.enableButton(updateProfilePhotoButton, label);
+    })
+    //event listener to retrieve and store photo
+    document.getElementById('profile-photo-upload-button').addEventListener('change', e =>{
+        photoFile = e.target.files[0];
+        if(!photoFile) {
+            document.getElementById('profile-img-tag').src = accountInfo.photoURL;
+            return;
+        }
+        const reader = new FileReader();
+        //preview img
+        reader.onload = () =>document.getElementById('profile-img-tag').src = reader.result
+        reader.readAsDataURL(photoFile);
+    })
 
     //collects all forms from profile page
     const forms = document.getElementsByClassName('form-profile');
@@ -183,6 +225,7 @@ html += `
             }else if( buttonLabel == 'Update'){
                 const updateInfo = {}; //updateInfo.key = value;
                 updateInfo[key] = value;
+                const label = Util.disableButton(buttons[1]);
                 try{
                     await FirebaseController.updateAccountInfo(Auth.currentUser.uid, updateInfo);
                     // updates current account info to web browser
@@ -192,6 +235,7 @@ html += `
                     Util.info(`Update Error ${key}`, JSON.stringify(e) )
 
                 }
+                Util.enableButton(buttons[1], label)
                 buttons[0].style.display = 'inline-block';
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
