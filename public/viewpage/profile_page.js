@@ -39,7 +39,7 @@ export async function profile_page(){
     `;
 
     html +=`
-        <form class"form-profile" method="post">
+        <form class="form-profile" method="post">
             <table class="table table-sm">
             <tr>
                 <td width="15%">Name:</td>
@@ -55,7 +55,7 @@ export async function profile_page(){
     `;
 
     html +=`
-    <form class"form-profile" method="post">
+    <form class="form-profile" method="post">
         <table class="table table-sm">
         <tr>
             <td width="15%">Address:</td>
@@ -71,7 +71,7 @@ export async function profile_page(){
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">City:</td>
@@ -87,7 +87,7 @@ html +=`
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">State:</td>
@@ -104,7 +104,7 @@ html +=`
 `;
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">Zip:</td>
@@ -122,7 +122,7 @@ html +=`
 
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">Credit Card #:</td>
@@ -138,8 +138,28 @@ html +=`
 </form>
 `;
 
+html += `
+    <table>
+        <tr>
+        <td>
+            <input type="file" id="profile-photo-upload-button" value ="upload">
+        </td>
+        <td>
+            <img id="profile-img-tag" src="${accountInfo.photoURL}" class="rounded-circle" width="250px">
+        </td>
+        <td>
+            <button id="profile-profile-photo-update-button" class="btn btn-outline-danger">Update Photo</button>
+        </td>
+        </tr>
+    </table>
+`
+
 
     Element.root.innerHTML = html;
+
+    const forms = document.getElementsByClassName('form-profile')
+
+
 }
 
 function actionButtons(){
