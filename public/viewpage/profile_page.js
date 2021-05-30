@@ -122,7 +122,7 @@ html +=`
 
 
 html +=`
-<form class"form-profile" method="post">
+<form class="form-profile" method="post">
     <table class="table table-sm">
     <tr>
         <td width="15%">Credit Card #:</td>
@@ -160,7 +160,7 @@ html += `
     //collects all forms from profile page
     const forms = document.getElementsByClassName('form-profile');
     for( let i = 0; i<forms.length; i++){
-        forms[i].addEventListener('submit', e =>{
+        forms[i].addEventListener('submit', async e =>{
             e.preventDefault();
             //grabs all buttons as an array
             const buttons = e.target.getElementsByTagName('button')
@@ -168,6 +168,9 @@ html += `
             const inputTag = e.target.getElementsByTagName('input')[0];
             //assigns buttonLabel variable with the button that was clicked
             const buttonLabel = e.target.submitter;
+            // key value pair to use to update acct info
+            const key = inputTag.name;
+            const value = inputTag.value;
 
             if(buttonLabel == 'Edit'){
                 //hides button
@@ -178,6 +181,17 @@ html += `
                 //re-enables field to update
                 inputTag.disabled = false;
             }else if( buttonLabel == 'Update'){
+                const updateInfo = {}; //updateInfo.key = value;
+                updateInfo[key] = value;
+                try{
+                    await FirebaseController.updateAccountInfo(Auth.currentUser.uid, updateInfo);
+                    // updates current account info to web browser
+                    accountInfo[key] = value;
+                }catch(e){
+                    if(Constant.DEV) console.log(e)
+                    Util.info(`Update Error ${key}`, JSON.stringify(e) )
+
+                }
                 buttons[0].style.display = 'inline-block';
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
@@ -187,6 +201,8 @@ html += `
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
                 inputTag.disabled = true;
+                //original value if cancel button is clicked
+                inputTag.value = accountInfo[key]
             }
         })
     }

@@ -79,4 +79,11 @@ export async function getAccountInfo(uid){
     }
 }
 
+//update account info
+export async function updateAccountInfo(uid, updateInfo){
+    //updateInfo: {key: value}
+    await firebase.firestore().collection(Constant.collectionNames.ACCOUNT_INFO)
+                .doc(uid).update(updateInfo);
+
+}
 
